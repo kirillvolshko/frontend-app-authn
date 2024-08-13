@@ -77,6 +77,7 @@ const FormFieldRenderer = (props) => {
     case 'text': {
       formField = (
         <Form.Group controlId={fieldData.name} isInvalid={!!(isRequired && errorMessage)}>
+          <Form.Label size="sm" className="h6 d-block" htmlFor={id}>{fieldData.label}</Form.Label>
           <Form.Control
             className={className}
             name={fieldData.name}

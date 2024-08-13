@@ -18,6 +18,7 @@ import {
   REGISTER_EMBEDDED_PAGE,
   REGISTER_PAGE,
   RESET_PAGE,
+  REGISTER_PAGE_FORMS,
 } from './data/constants';
 import { updatePathWithQueryParams } from './data/utils';
 import { ForgotPasswordPage } from './forgot-password';
@@ -26,9 +27,10 @@ import { ProgressiveProfiling } from './progressive-profiling';
 import { RecommendationsPage } from './recommendations';
 import { RegistrationPage } from './register';
 import { ResetPasswordPage } from './reset-password';
-
+import { RegistrationPageForms } from './register';
 import './index.scss';
-
+import './main.css'
+import './output.css'
 registerIcons();
 
 const MainApp = () => (
@@ -38,7 +40,7 @@ const MainApp = () => (
     </Helmet>
     {getConfig().ZENDESK_KEY && <Zendesk />}
     <Routes>
-      <Route path="/" element={<Navigate replace to={updatePathWithQueryParams(REGISTER_PAGE)} />} />
+      <Route path="/" element={<Navigate replace to={updatePathWithQueryParams(LOGIN_PAGE)} />} />
       <Route
         path={REGISTER_EMBEDDED_PAGE}
         element={<EmbeddedRegistrationRoute><RegistrationPage /></EmbeddedRegistrationRoute>}
@@ -49,6 +51,7 @@ const MainApp = () => (
           <UnAuthOnlyRoute><Logistration selectedPage={LOGIN_PAGE} /></UnAuthOnlyRoute>
         }
       />
+      <Route path={REGISTER_PAGE_FORMS} element={<UnAuthOnlyRoute><RegistrationPageForms /></UnAuthOnlyRoute>} />
       <Route path={REGISTER_PAGE} element={<UnAuthOnlyRoute><Logistration /></UnAuthOnlyRoute>} />
       <Route path={RESET_PAGE} element={<UnAuthOnlyRoute><ForgotPasswordPage /></UnAuthOnlyRoute>} />
       <Route path={PASSWORD_RESET_CONFIRM} element={<ResetPasswordPage />} />

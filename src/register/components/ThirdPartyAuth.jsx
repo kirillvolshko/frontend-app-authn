@@ -29,11 +29,7 @@ const ThirdPartyAuth = (props) => {
 
   return (
     <>
-      {((isEnterpriseLoginDisabled && isInstitutionAuthActive) || isSocialAuthActive) && (
-        <div className="mt-4 mb-3 h4">
-          {formatMessage(messages['registration.other.options.heading'])}
-        </div>
-      )}
+
 
       {thirdPartyAuthApiStatus === PENDING_STATE && isThirdPartyAuthActive ? (
         <Skeleton className="tpa-skeleton" height={36} count={2} />

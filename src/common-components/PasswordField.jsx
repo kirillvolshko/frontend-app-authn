@@ -118,10 +118,11 @@ const PasswordField = (props) => {
 
   return (
     <Form.Group controlId={props.name} isInvalid={props.errorMessage !== ''}>
+      <Form.Label className="tw-font-grotesk tw-text-[16px] tw-text-netural-1000 tw-leading-[12.12px] tw-font-medium">{props.floatingLabel}</Form.Label>
       <OverlayTrigger key="tooltip" placement={placement} overlay={tooltip} show={showTooltip}>
+
         <Form.Control
           as="input"
-          className="form-group__form-field"
           type={isPasswordHidden ? 'password' : 'text'}
           name={props.name}
           value={props.value}
@@ -132,7 +133,6 @@ const PasswordField = (props) => {
           onChange={props.handleChange}
           controlClassName={props.borderClass}
           trailingElement={isPasswordHidden ? ShowButton : HideButton}
-          floatingLabel={props.floatingLabel}
         />
       </OverlayTrigger>
       {props.errorMessage !== '' && (
@@ -150,7 +150,7 @@ PasswordField.defaultProps = {
   errorMessage: '',
   handleBlur: null,
   handleFocus: null,
-  handleChange: () => {},
+  handleChange: () => { },
   handleErrorChange: null,
   showRequirements: true,
   autoComplete: null,

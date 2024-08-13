@@ -25,15 +25,14 @@ import {
   getTpaHint, getTpaProvider, updatePathWithQueryParams,
 } from '../data/utils';
 import { LoginPage } from '../login';
-import { RegistrationPage } from '../register';
+import RegistrationPage from '../register/RegistrationPage';
 import { backupRegistrationForm } from '../register/data/actions';
+import RegistrationPageForms from '../register/RegistrationPageForms';
 
 const Logistration = (props) => {
   const { selectedPage, tpaProviders } = props;
   const tpaHint = getTpaHint();
-  const {
-    providers, secondaryProviders,
-  } = tpaProviders;
+  const { providers, secondaryProviders } = tpaProviders;
   const { formatMessage } = useIntl();
   const [institutionLogin, setInstitutionLogin] = useState(false);
   const [key, setKey] = useState('');
@@ -46,7 +45,6 @@ const Logistration = (props) => {
       authService.getCsrfTokenService().getCsrfToken(getConfig().LMS_BASE_URL);
     }
   });
-
   useEffect(() => {
     if (disablePublicAccountCreation) {
       navigate(updatePathWithQueryParams(LOGIN_PAGE));
@@ -91,49 +89,35 @@ const Logistration = (props) => {
 
   return (
     <BaseContainer>
-      <div>
+      <div className='tw-flex tw-justify-center tw-justify-items-center'>
         {disablePublicAccountCreation
           ? (
             <>
-              {institutionLogin && (
-                <Tabs defaultActiveKey="" id="controlled-tab" onSelect={handleInstitutionLogin}>
-                  <Tab title={tabTitle} eventKey={LOGIN_PAGE} />
-                </Tabs>
-              )}
               <div id="main-content" className="main-content">
-                {!institutionLogin && (
-                  <h3 className="mb-4.5">{formatMessage(messages['logistration.sign.in'])}</h3>
-                )}
                 <LoginPage institutionLogin={institutionLogin} handleInstitutionLogin={handleInstitutionLogin} />
               </div>
             </>
           )
           : (
             <div>
-              {institutionLogin
-                ? (
-                  <Tabs defaultActiveKey="" id="controlled-tab" onSelect={handleInstitutionLogin}>
-                    <Tab title={tabTitle} eventKey={selectedPage === LOGIN_PAGE ? LOGIN_PAGE : REGISTER_PAGE} />
-                  </Tabs>
-                )
-                : (!isValidTpaHint() && (
-                  <Tabs defaultActiveKey={selectedPage} id="controlled-tab" onSelect={handleOnSelect}>
-                    <Tab title={formatMessage(messages['logistration.register'])} eventKey={REGISTER_PAGE} />
-                    <Tab title={formatMessage(messages['logistration.sign.in'])} eventKey={LOGIN_PAGE} />
-                  </Tabs>
-                ))}
-              { key && (
-                <Navigate to={updatePathWithQueryParams(key)} replace />
-              )}
               <div id="main-content" className="main-content">
-                {selectedPage === LOGIN_PAGE
-                  ? <LoginPage institutionLogin={institutionLogin} handleInstitutionLogin={handleInstitutionLogin} />
-                  : (
+                {selectedPage === LOGIN_PAGE ? (
+                  <LoginPage institutionLogin={institutionLogin} handleInstitutionLogin={handleInstitutionLogin} />
+                ) : (
+                  selectedPage === REGISTER_PAGE ? (
                     <RegistrationPage
                       institutionLogin={institutionLogin}
                       handleInstitutionLogin={handleInstitutionLogin}
+                    // передаем setEmail как пропс
                     />
-                  )}
+                  ) : (
+                    <RegistrationPageForms
+                      institutionLogin={institutionLogin}
+                      handleInstitutionLogin={handleInstitutionLogin}
+                    // передаем email как пропс
+                    />
+                  )
+                )}
               </div>
             </div>
           )}
@@ -157,9 +141,6 @@ Logistration.defaultProps = {
     providers: [],
     secondaryProviders: [],
   },
-};
-
-Logistration.defaultProps = {
   selectedPage: REGISTER_PAGE,
 };
 

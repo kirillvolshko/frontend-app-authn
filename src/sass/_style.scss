@@ -25,11 +25,15 @@ $apple-focus-black: $apple-black;
 
 $elevation-level-2-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
 
+body {
+  background-color: #F9F8F4;
+}
 
 // Forgot Password Page
 .forgot-password-button-width {
   min-width: 6rem;
 }
+
 .spinner--position-centered {
   left: 0;
   right: 0;
@@ -109,7 +113,7 @@ $elevation-level-2-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
   height: 36px;
   color: $primary;
 
-  .btn-tpa__image-icon{
+  .btn-tpa__image-icon {
     background-color: transparent;
     max-height: 24px;
     max-width: 24px;
@@ -293,11 +297,13 @@ select.form-control {
   @extend .x-small;
   filter: drop-shadow($elevation-level-2-shadow) drop-shadow($elevation-level-2-shadow) !important;
   right: 0.2rem !important;
+
   .tooltip-inner {
     background: $white;
     display: block;
     color: $gray-500;
   }
+
   .arrow::before {
     border-left-color: $white;
   }
@@ -318,6 +324,7 @@ select.form-control {
     display: block;
     color: $gray-500;
   }
+
   .arrow::before {
     border-top-color: $white;
   }
@@ -336,7 +343,7 @@ select.form-control {
   color: $gray-700;
 }
 
-.logistration-button:hover{
+.logistration-button:hover {
   color: $gray-700;
   text-decoration: none;
 }
@@ -351,6 +358,7 @@ select.form-control {
 .icon-size {
   width: 2.3rem;
 }
+
 .has-floating-label {
   color: $gray-500;
 }
@@ -364,13 +372,12 @@ select.form-control {
   font-size: 0.75rem;
 }
 
-.form-group__form-field .form-control:focus ~ .pgn__form-control-floating-label .pgn__form-control-floating-label-content {
-    font-size: 16px;
-    color: $primary-700;
+.form-group__form-field .form-control:focus~.pgn__form-control-floating-label .pgn__form-control-floating-label-content {
+  font-size: 16px;
+  color: $primary-700;
 }
 
-.form-group__form-field .form-control:not([value='']):not(:focus) ~
-  .pgn__form-control-floating-label .pgn__form-control-floating-label-content {
+.form-group__form-field .form-control:not([value='']):not(:focus)~.pgn__form-control-floating-label .pgn__form-control-floating-label-content {
   font-size: 16px;
 }
 
@@ -431,11 +438,12 @@ select.form-control {
   .welcome-page-content,
   .main-content {
     min-width: 100vw !important;
-    padding: 1.5rem !important;
+    padding: 1rem !important;
   }
 
   #password-requirement-top {
     display: unset;
+
     .tooltip-inner {
       max-width: inherit;
       min-width: unset !important;
@@ -455,5 +463,6 @@ select.form-control {
 }
 
 .pgn__form-control-decorator-trailing {
-  right: 0 !important;
+  top: 2px;
+
 }

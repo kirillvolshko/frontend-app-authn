@@ -4,3 +4,44 @@
 @import "~@edx/brand/paragon/overrides";
 
 @import "sass/style";
+
+@font-face {
+    font-family: "grotesk";
+    src: url("./fonts/Cy-Grotesk-Key_Regular.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "grotesk";
+    src: url("./fonts/Cy-Grotesk-Key_Medium.ttf");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "grotesk";
+    src: url("./fonts/Cy-Grotesk-Key_Demi.ttf");
+    font-weight: 700;
+}
+
+.btn-brand:disabled {
+    background-color: #f57a288e;
+    border-color: #f57a288e;
+}
+
+.btn-brand.disabled {
+    background-color: #F57A28;
+    border-color: #F57A28;
+}
+
+
+.nav-item:hover {
+    background-color: white !important;
+}
+
+
+
+body {
+    font-family: "grotesk", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}

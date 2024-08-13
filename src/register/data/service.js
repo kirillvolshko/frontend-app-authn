@@ -44,3 +44,7 @@ export async function getFieldsValidations(formPayload) {
     fieldValidations: data,
   };
 }
+export function isValidUkrainianPhoneNumber(phone) {
+  const phoneRegex = /^\+380\d{9}$/;
+  return phoneRegex.test(phone);
+}

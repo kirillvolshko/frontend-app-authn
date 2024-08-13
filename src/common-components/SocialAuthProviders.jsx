@@ -6,7 +6,8 @@ import { Icon } from '@edx/paragon';
 import { Login } from '@edx/paragon/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
-
+import google from '../assets/google-icon.svg'
+import facebook from '../assets/facebook-icon.svg'
 import messages from './messages';
 import { LOGIN_PAGE, SUPPORTED_ICON_CLASSES } from '../data/constants';
 
@@ -26,25 +27,18 @@ const SocialAuthProviders = (props) => {
       id={provider.id}
       key={provider.id}
       type="button"
-      className={`btn-social btn-${provider.id} ${index % 2 === 0 ? 'mr-3' : ''}`}
+      className='button-outlined button-lg tw-flex'
       data-provider-url={referrer === LOGIN_PAGE ? provider.loginUrl : provider.registerUrl}
       onClick={handleSubmit}
     >
-      {provider.iconImage ? (
-        <div aria-hidden="true">
-          <img className="btn-tpa__image-icon" src={provider.iconImage} alt={`icon ${provider.name}`} />
-        </div>
-      )
-        : (
-          <div className="btn-tpa__font-container" aria-hidden="true">
-            {SUPPORTED_ICON_CLASSES.includes(provider.iconClass) ? (
-              <FontAwesomeIcon icon={['fab', provider.iconClass]} />)
-              : (
-                <Icon className="h-75" src={Login} />
-              )}
-          </div>
-        )}
-      <span id="provider-name" className="notranslate mr-auto pl-2" aria-hidden="true">{provider.name}</span>
+      <div className='tw-max-w-[24px]'>
+        {provider.id.includes('google') ? (
+          <img src={google} alt="Google Icon" />
+        ) : provider.id.includes('facebook') ? (
+          <img src={facebook} alt="Facebook Icon" />
+        ) : null}
+      </div>
+      <span id="provider-name" className="tw-font-grotesk tw-text-[16px] tw-text-netural-1000 tw-leading-[20.67px] tw-font-medium tw-ml-[16px]" aria-hidden="true">Продовжити з {provider.name}</span>
       <span className="sr-only">
         {referrer === LOGIN_PAGE
           ? formatMessage(messages['sso.sign.in.with'], { providerName: provider.name })

@@ -6,6 +6,31 @@ const messages = defineMessages({
     defaultMessage: 'Register | {siteName}',
     description: 'register page title',
   },
+  'register.page.title.form': {
+    id: 'register.page.title.form',
+    defaultMessage: 'Join to Prometheus',
+    description: 'Join to Prometheus',
+  },
+  'account.settings.field.phone.number': {
+    id: 'account.settings.field.phone.number',
+    defaultMessage: 'Phone Number',
+    description: 'Label for account settings phonenumber field.',
+  },
+  'account.settings.field.phone.number.empty': {
+    id: 'account.settings.field.phone.number.empty',
+    defaultMessage: 'Add your phone numberr',
+    description: 'Label for account settings phonenumber field.',
+  },
+  'register.page.have.account.first': {
+    id: 'register.page.have.account.first',
+    defaultMessage: 'Already have an account?',
+    description: 'Already have an account?',
+  },
+  'register.page.have.account.second': {
+    id: 'register.page.have.account.second',
+    defaultMessage: 'Sign in',
+    description: 'Sign in',
+  },
   // Field labels
   'registration.fullname.label': {
     id: 'registration.fullname.label',
@@ -21,6 +46,11 @@ const messages = defineMessages({
     id: 'registration.username.label',
     defaultMessage: 'Public username',
     description: 'Label that appears above username field',
+  },
+  'registration.username.label.under': {
+    id: 'registration.username.label.under',
+    defaultMessage: 'The name that will appear on the certificate',
+    description: 'The name that will appear on the certificate',
   },
   'registration.password.label': {
     id: 'registration.password.label',
@@ -170,8 +200,8 @@ const messages = defineMessages({
   'registration.tpa.authentication.failure': {
     id: 'registration.tpa.authentication.failure',
     defaultMessage: 'We are sorry, you are not authorized to access {platform_name} via this channel. '
-        + 'Please contact your learning administrator or manager in order to access {platform_name}.'
-        + '{lineBreak}{lineBreak}Error Details:{lineBreak}{errorMessage}',
+      + 'Please contact your learning administrator or manager in order to access {platform_name}.'
+      + '{lineBreak}{lineBreak}Error Details:{lineBreak}{errorMessage}',
     description: 'Error message third party authentication pipeline fails',
   },
   // Terms of Service and Honor Code

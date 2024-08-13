@@ -4,10 +4,12 @@ import {
   Form, TransitionReplace,
 } from '@edx/paragon';
 import PropTypes from 'prop-types';
-
+import messages from '../register/messages';
+import icon from '../assets/vector.svg'
+import { injectIntl, useIntl } from '@edx/frontend-platform/i18n';
 const FormGroup = (props) => {
   const [hasFocus, setHasFocus] = useState(false);
-
+  const { formatMessage } = useIntl();
   const handleFocus = (e) => {
     setHasFocus(true);
     if (props.handleFocus) { props.handleFocus(e); }
@@ -22,23 +24,30 @@ const FormGroup = (props) => {
 
   return (
     <Form.Group controlId={props.name} className={props.className} isInvalid={props.errorMessage !== ''}>
+      <Form.Label className="tw-font-grotesk tw-text-[16px] tw-text-netural-1000 tw-leading-[12.12px] tw-font-medium tw-mb-[8px]">{props.floatingLabel}</Form.Label>
+      {props.name === 'name' && (
+        <div className='tw-flex tw-items-start'>
+          <img src={icon} alt='question icon' />
+          <Form.Label className="tw-font-grotesk tw-text-[14px] tw-text-neutral-1000 tw-leading-[12.12px] tw-font-medium tw-mb-[8px] tw-ml-[9px]">
+            {formatMessage(messages['registration.username.label.under'])}
+          </Form.Label>
+        </div>
+      )}
+
       <Form.Control
         as={props.as}
         readOnly={props.readOnly}
         type={props.type}
         aria-invalid={props.errorMessage !== ''}
-        className="form-group__form-field"
         autoComplete={props.autoComplete}
         spellCheck={props.spellCheck}
         name={props.name}
         value={props.value}
-        onFocus={handleFocus}
         onBlur={handleOnBlur}
         onClick={handleClick}
         onChange={props.handleChange}
         controlClassName={props.borderClass}
         trailingElement={props.trailingElement}
-        floatingLabel={props.floatingLabel}
       >
         {props.options ? props.options() : null}
       </Form.Control>
@@ -70,7 +79,7 @@ FormGroup.defaultProps = {
   className: '',
   errorMessage: '',
   handleBlur: null,
-  handleChange: () => {},
+  handleChange: () => { },
   handleClick: null,
   handleFocus: null,
   helpText: [],
@@ -83,6 +92,9 @@ FormGroup.defaultProps = {
 
 FormGroup.propTypes = {
   as: PropTypes.string,
+  intl: PropTypes.shape({
+    formatMessage: PropTypes.func,
+  }).isRequired,
   autoComplete: PropTypes.string,
   borderClass: PropTypes.string,
   children: PropTypes.element,

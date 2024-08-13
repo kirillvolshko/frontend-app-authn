@@ -7,7 +7,6 @@ import { getConfig } from '@edx/frontend-platform';
 import { sendPageEvent, sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Form, Spinner, StatefulButton } from '@edx/paragon';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import Skeleton from 'react-loading-skeleton';
@@ -35,12 +34,13 @@ import {
 import { getThirdPartyAuthContext as getRegistrationDataFromBackend } from '../common-components/data/actions';
 import EnterpriseSSO from '../common-components/EnterpriseSSO';
 import {
-  COMPLETE_STATE, PENDING_STATE, REGISTER_PAGE,
+  COMPLETE_STATE, PENDING_STATE, REGISTER_PAGE, LOGIN_PAGE, REGISTER_PAGE_FORMS
 } from '../data/constants';
 import {
   getAllPossibleQueryParams, getTpaHint, getTpaProvider, isHostAvailableInQueryParams, setCookie,
 } from '../data/utils';
-
+import { Link } from 'react-router-dom';
+import PhoneFields from './RegistrationFields/PhoneFields/PhoneFields';
 /**
  * Main Registration Page component
  */
@@ -102,7 +102,9 @@ const RegistrationPage = (props) => {
   const [formStartTime, setFormStartTime] = useState(null);
   // temporary error state for embedded experience because we don't want to show errors on blur
   const [temporaryErrors, setTemporaryErrors] = useState({ ...backedUpFormData.errors });
-
+  const [showFullForm, setShowFullForm] = useState(false);
+  const [isPhoneValid, setIsPhoneValid] = useState(false);
+  const [registration, setRegistration] = useState(false);
   const { cta, host } = queryParams;
   const buttonLabel = cta
     ? formatMessage(messages['create.account.cta.button'], { label: cta })
@@ -121,6 +123,7 @@ const RegistrationPage = (props) => {
         setFormFields(prevState => ({
           ...prevState, name, username, email,
         }));
+
         dispatch(setUserPipelineDataLoaded(true));
       }
     }
@@ -189,6 +192,7 @@ const RegistrationPage = (props) => {
     }
     setErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
     setFormFields(prevState => ({ ...prevState, [name]: value }));
+
   };
 
   const handleErrorChange = (fieldName, error) => {
@@ -251,7 +255,9 @@ const RegistrationPage = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setShowFullForm(true);
     registerUser();
+    setRegistration(true);
   };
 
   useEffect(() => {
@@ -292,10 +298,7 @@ const RegistrationPage = (props) => {
           </div>
         ) : (
           <div
-            className={classNames(
-              'mw-xs mt-3',
-              { 'w-100 m-auto pt-4 main-content': registrationEmbedded },
-            )}
+            className="tw-bg-white tw-w-full tw-px-[32px]  tw-py-[56px] tw-rounded-[16px] sm:tw-px-[56px] sm:tw-max-w-[460px] "
           >
             <ThirdPartyAuthAlert
               currentProvider={currentProvider}
@@ -308,16 +311,9 @@ const RegistrationPage = (props) => {
               context={{ provider: currentProvider, errorMessage: thirdPartyAuthErrorMessage }}
             />
             <Form id="registration-form" name="registration-form">
-              <NameField
-                name="name"
-                value={formFields.name}
-                shouldFetchUsernameSuggestions={!formFields.username.trim()}
-                handleChange={handleOnChange}
-                handleErrorChange={handleErrorChange}
-                errorMessage={errors.name}
-                helpText={[formatMessage(messages['help.text.name'])]}
-                floatingLabel={formatMessage(messages['registration.fullname.label'])}
-              />
+              <Form.Label className="tw-font-grotesk tw-text-[32px] tw-text-netural-1000 tw-leading-[38.4px] tw-font-medium tw-mb-[40px]">
+                {formatMessage(messages['register.page.title.form'])}
+              </Form.Label>
               <EmailField
                 name="email"
                 value={formFields.email}
@@ -325,29 +321,9 @@ const RegistrationPage = (props) => {
                 handleErrorChange={handleErrorChange}
                 handleChange={handleOnChange}
                 errorMessage={errors.email}
-                helpText={[formatMessage(messages['help.text.email'])]}
+                helpText={formatMessage(messages['help.text.email'])}
                 floatingLabel={formatMessage(messages['registration.email.label'])}
               />
-              <UsernameField
-                name="username"
-                spellCheck="false"
-                value={formFields.username}
-                handleChange={handleOnChange}
-                handleErrorChange={handleErrorChange}
-                errorMessage={errors.username}
-                helpText={[formatMessage(messages['help.text.username.1']), formatMessage(messages['help.text.username.2'])]}
-                floatingLabel={formatMessage(messages['registration.username.label'])}
-              />
-              {!currentProvider && (
-                <PasswordField
-                  name="password"
-                  value={formFields.password}
-                  handleChange={handleOnChange}
-                  handleErrorChange={handleErrorChange}
-                  errorMessage={errors.password}
-                  floatingLabel={formatMessage(messages['registration.password.label'])}
-                />
-              )}
               <ConfigurableRegistrationForm
                 email={formFields.email}
                 fieldErrors={errors}
@@ -357,33 +333,102 @@ const RegistrationPage = (props) => {
                 autoSubmitRegisterForm={autoSubmitRegForm}
                 fieldDescriptions={fieldDescriptions}
               />
-              <StatefulButton
-                id="register-user"
-                name="register-user"
-                type="submit"
-                variant="brand"
-                className="register-button mt-4 mb-4"
-                state={submitState}
-                labels={{
-                  default: buttonLabel,
-                  pending: '',
-                }}
-                onClick={handleSubmit}
-                onMouseDown={(e) => e.preventDefault()}
-              />
-              {!registrationEmbedded && (
-                <ThirdPartyAuth
-                  currentProvider={currentProvider}
-                  providers={providers}
-                  secondaryProviders={secondaryProviders}
-                  handleInstitutionLogin={handleInstitutionLogin}
-                  thirdPartyAuthApiStatus={thirdPartyAuthApiStatus}
-                />
+              {showFullForm ? (
+                <>
+                  <NameField
+                    name="name"
+                    value={formFields.name}
+                    shouldFetchUsernameSuggestions={!formFields.username.trim()}
+                    handleChange={handleOnChange}
+                    handleErrorChange={handleErrorChange}
+                    errorMessage={errors.name}
+                    helpText={formatMessage(messages['help.text.name'])}
+                    floatingLabel={formatMessage(messages['registration.fullname.label'])}
+                  />
+                  <UsernameField
+                    name="username"
+                    spellCheck="false"
+                    value={formFields.username}
+                    handleChange={handleOnChange}
+                    handleErrorChange={handleErrorChange}
+                    errorMessage={errors.username}
+                    helpText={[formatMessage(messages['help.text.username.1']), formatMessage(messages['help.text.username.2'])]}
+                    floatingLabel={formatMessage(messages['registration.username.label'])}
+                  />
+                  <PhoneFields
+                    label={formatMessage(messages['account.settings.field.phone.number'])}
+                    name="phone_number"
+                    onChange={handleOnChange}
+                    onValidChange={setIsPhoneValid}
+                    registration={registration}
+                  />
+                  {!currentProvider && (
+                    <PasswordField
+                      name="password"
+                      value={formFields.password}
+                      handleChange={handleOnChange}
+                      handleErrorChange={handleErrorChange}
+                      errorMessage={errors.password}
+                      floatingLabel={formatMessage(messages['registration.password.label'])}
+                    />
+                  )}
+                  <ConfigurableRegistrationForm
+                    email={formFields.email}
+                    fieldErrors={errors}
+                    formFields={configurableFormFields}
+                    setFieldErrors={registrationEmbedded ? setTemporaryErrors : setErrors}
+                    setFormFields={setConfigurableFormFields}
+                    autoSubmitRegisterForm={autoSubmitRegForm}
+                    fieldDescriptions={fieldDescriptions}
+                  />
+                  <StatefulButton
+                    id="register-user"
+                    name="register-user"
+                    type="submit"
+                    variant="brand"
+                    className="button-primary button-lg"
+                    state={submitState}
+                    labels={{
+                      default: buttonLabel,
+                      pending: '',
+                    }}
+                    onClick={handleSubmit}
+                    onMouseDown={(e) => e.preventDefault()}
+                    disabled={!isPhoneValid}
+                  />
+                </>
+              ) : (
+                <>
+                  <button className='button-primary button-lg' onClick={() => setShowFullForm(true)}>
+                    Продовжити
+                  </button>
+                  <div className="tw-flex tw-items-center tw-my-[24px]">
+                    <span className="tw-text-gray-400 tw-flex-grow tw-border-t tw-border-gray-200"></span>
+                    <span className="tw-mx-4 tw-text-gray-500">або</span>
+                    <span className="tw-text-gray-400 tw-flex-grow tw-border-t tw-border-gray-200"></span>
+                  </div>
+                  {!registrationEmbedded && (
+                    <ThirdPartyAuth
+                      currentProvider={currentProvider}
+                      providers={providers}
+                      secondaryProviders={secondaryProviders}
+                      handleInstitutionLogin={handleInstitutionLogin}
+                      thirdPartyAuthApiStatus={thirdPartyAuthApiStatus}
+                    />
+                  )}
+                </>
               )}
+              <div className='tw-flex tw-justify-center tw-mt-[24px]'>
+                <p className='tw-font-grotesk tw-text-[14px] tw-text-netural-1000 tw-leading-[20.67px] tw-font-semibold'>
+                  {formatMessage(messages['register.page.have.account.first'])}
+                </p>
+                <Link to={LOGIN_PAGE} className="tw-font-grotesk tw-text-[14px] tw-ml-[6px] tw-text-purple-600 tw-leading-[21.12px] tw-font-semibold">
+                  {formatMessage(messages['register.page.have.account.second'])}
+                </Link>
+              </div>
             </Form>
           </div>
         )}
-
       </>
     );
   };

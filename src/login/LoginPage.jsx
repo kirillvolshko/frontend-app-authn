@@ -29,8 +29,9 @@ import { getThirdPartyAuthContext } from '../common-components/data/actions';
 import { thirdPartyAuthContextSelector } from '../common-components/data/selectors';
 import EnterpriseSSO from '../common-components/EnterpriseSSO';
 import {
-  DEFAULT_STATE, ENTERPRISE_LOGIN_URL, PENDING_STATE, RESET_PAGE,
+  DEFAULT_STATE, ENTERPRISE_LOGIN_URL, PENDING_STATE, RESET_PAGE, REGISTER_PAGE,
 } from '../data/constants';
+
 import {
   getActivationStatus,
   getAllPossibleQueryParams,
@@ -170,12 +171,6 @@ class LoginPage extends React.Component {
 
     return (
       <>
-        {(isSocialAuthActive || (isEnterpriseLoginDisabled && isInstitutionAuthActive))
-          && (
-            <div className="mt-4 mb-3 h4">
-              {intl.formatMessage(messages['login.other.options.heading'])}
-            </div>
-          )}
 
         {(!isEnterpriseLoginDisabled && isSocialAuthActive) && (
           <Hyperlink className="btn btn-link btn-sm text-body p-0 mb-4" destination={this.getEnterPriseLoginURL()}>
@@ -201,6 +196,7 @@ class LoginPage extends React.Component {
             )}
           </>
         )}
+
       </>
     );
   }
@@ -243,7 +239,7 @@ class LoginPage extends React.Component {
           redirectUrl={this.props.loginResult.redirectUrl}
           finishAuthUrl={thirdPartyAuthContext.finishAuthUrl}
         />
-        <div className="mw-xs mt-3">
+        <div className="tw-bg-white tw-w-full tw-px-[32px]  tw-py-[56px] tw-rounded-[16px] sm:tw-px-[56px] sm:tw-max-w-[460px] ">
           <ThirdPartyAuthAlert
             currentProvider={thirdPartyAuthContext.currentProvider}
             platformName={thirdPartyAuthContext.platformName}
@@ -254,6 +250,7 @@ class LoginPage extends React.Component {
           {activationMsgType && <AccountActivationMessage messageType={activationMsgType} />}
           {this.props.resetPassword && !this.props.loginError ? <ResetPasswordSuccess /> : null}
           <Form name="sign-in-form" id="sign-in-form">
+            <Form.Label className="tw-font-fixel tw-text-[32px] tw-text-netural-1000 tw-leading-[38.4px] tw-font-medium tw-mb-[40px]">{intl.formatMessage(messages['login.page.title.form'])}</Form.Label>
             <FormGroup
               name="emailOrUsername"
               value={this.state.emailOrUsername}
@@ -275,12 +272,20 @@ class LoginPage extends React.Component {
               errorMessage={this.state.errors.password}
               floatingLabel={intl.formatMessage(messages['login.password.label'])}
             />
+            <Link
+              id="forgot-password"
+              name="forgot-password"
+              className="tw-font-fixel tw-mt-[12px] tw-text-[14px] tw-text-purple-600 tw-leading-[18.48px] tw-font-semibold"
+              to={updatePathWithQueryParams(RESET_PAGE)}
+              onClick={this.handleForgotPasswordLinkClickEvent}
+            >
+              {intl.formatMessage(messages['forgot.password'])}
+            </Link>
             <StatefulButton
               name="sign-in"
               id="sign-in"
               type="submit"
-              variant="brand"
-              className="login-button-width"
+              className="button-primary button-lg tw-mt-[24px]"
               state={submitState}
               labels={{
                 default: intl.formatMessage(messages['sign.in.button']),
@@ -289,16 +294,18 @@ class LoginPage extends React.Component {
               onClick={this.handleSubmit}
               onMouseDown={(e) => e.preventDefault()}
             />
-            <Link
-              id="forgot-password"
-              name="forgot-password"
-              className="btn btn-link font-weight-500 text-body"
-              to={updatePathWithQueryParams(RESET_PAGE)}
-              onClick={this.handleForgotPasswordLinkClickEvent}
-            >
-              {intl.formatMessage(messages['forgot.password'])}
-            </Link>
+            <div class="tw-flex tw-items-center tw-my-[24px]">
+              <span class="tw-text-gray-400 tw-flex-grow tw-border-t tw-border-gray-200"></span>
+              <span class="tw-mx-4 tw-text-gray-500">або</span>
+              <span class="tw-text-gray-400 tw-flex-grow tw-border-t tw-border-gray-200"></span>
+            </div>
             {this.renderThirdPartyAuth(providers, secondaryProviders, currentProvider, thirdPartyAuthApiStatus, intl)}
+            <div className='tw-flex tw-justify-center tw-mt-[24px]'>
+              <p className='tw-font-fixel tw-text-[14px] tw-text-netural-1000 tw-leading-[20.67px] tw-font-semibold'>Ще не знами?</p>
+              <Link to={updatePathWithQueryParams(REGISTER_PAGE)}
+                className="tw-font-fixel tw-text-[14px] tw-ml-[6px] tw-text-purple-600 tw-leading-[21.12px] tw-font-semibold"
+              >Приєднатися</Link>
+            </div>
           </Form>
         </div>
       </>

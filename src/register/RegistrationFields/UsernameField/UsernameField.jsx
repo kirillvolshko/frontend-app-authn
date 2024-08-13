@@ -108,7 +108,7 @@ const UsernameField = (props) => {
             type="button"
             name="username"
             variant="outline-dark"
-            className="username-suggestions--chip data-hj-suppress"
+            className="button-purple"
             autoComplete={props.autoComplete}
             key={`suggestion-${index.toString()}`}
             onClick={(e) => handleSuggestionClick(e, username)}

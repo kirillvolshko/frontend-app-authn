@@ -6,6 +6,11 @@ const messages = defineMessages({
     defaultMessage: 'Login | {siteName}',
     description: 'login page title',
   },
+  'login.page.title.form': {
+    id: 'login.page.title.form',
+    defaultMessage: 'Welcome back!',
+    description: 'Welcome back!',
+  },
   // Login labels
   'login.user.identity.label': {
     id: 'login.user.identity.label',
@@ -55,8 +60,8 @@ const messages = defineMessages({
   'non.compliant.password.message': {
     id: 'non.compliant.password.message',
     defaultMessage: 'Your current password does not meet the new security requirements. '
-                    + 'We just sent a password-reset message to the email address associated with this account. '
-                    + 'Thank you for helping us keep your data safe.',
+      + 'We just sent a password-reset message to the email address associated with this account. '
+      + 'Thank you for helping us keep your data safe.',
     description: 'Error message for non-compliant password',
   },
   'account.locked.out.message.1': {
@@ -190,13 +195,13 @@ const messages = defineMessages({
   'password.security.nudge.body': {
     id: 'password.security.nudge.body',
     defaultMessage: 'Our system detected that your password is vulnerable. '
-                    + 'We recommend you change it so that your account stays secure.',
+      + 'We recommend you change it so that your account stays secure.',
     description: 'Message copy for prompt that nudges user to change their vulnerable password',
   },
   'password.security.block.body': {
     id: 'password.security.block.body',
     defaultMessage: 'Our system detected that your password is vulnerable. '
-                    + 'Change your password so that your account stays secure.',
+      + 'Change your password so that your account stays secure.',
     description: 'Message copy for prompt that asks user to change their vulnerable password',
   },
   'password.security.close.button': {
@@ -212,8 +217,8 @@ const messages = defineMessages({
   'login.tpa.authentication.failure': {
     id: 'login.tpa.authentication.failure',
     defaultMessage: 'We are sorry, you are not authorized to access {platform_name} via this channel. '
-        + 'Please contact your learning administrator or manager in order to access {platform_name}.'
-        + '{lineBreak}{lineBreak}Error Details:{lineBreak}{errorMessage}',
+      + 'Please contact your learning administrator or manager in order to access {platform_name}.'
+      + '{lineBreak}{lineBreak}Error Details:{lineBreak}{errorMessage}',
     description: 'Error message third party authentication pipeline fails',
   },
 });

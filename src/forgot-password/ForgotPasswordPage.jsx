@@ -101,63 +101,53 @@ const ForgotPasswordPage = (props) => {
           { siteName: getConfig().SITE_NAME })}
         </title>
       </Helmet>
-      <div>
-        <Tabs activeKey="" id="controlled-tab" onSelect={(key) => navigate(updatePathWithQueryParams(key))}>
-          <Tab title={tabTitle} eventKey={LOGIN_PAGE} />
-        </Tabs>
-        <div id="main-content" className="main-content">
-          <Form id="forget-password-form" name="forget-password-form" className="mw-xs">
-            <ForgotPasswordAlert email={bannerEmail} emailError={formErrors} status={status} />
-            <h2 className="h4">
-              {formatMessage(messages['forgot.password.page.heading'])}
-            </h2>
-            <p className="mb-4">
-              {formatMessage(messages['forgot.password.page.instructions'])}
-            </p>
-            <FormGroup
-              floatingLabel={formatMessage(messages['forgot.password.page.email.field.label'])}
-              name="email"
-              value={email}
-              autoComplete="on"
-              errorMessage={validationError}
-              handleChange={(e) => setEmail(e.target.value)}
-              handleBlur={handleBlur}
-              handleFocus={handleFocus}
-              helpText={[formatMessage(messages['forgot.password.email.help.text'], { platformName })]}
-            />
-            <StatefulButton
-              id="submit-forget-password"
-              name="submit-forget-password"
-              type="submit"
-              variant="brand"
-              className="forgot-password--button"
-              state={submitState}
-              labels={{
-                default: formatMessage(messages['forgot.password.page.submit.button']),
-                pending: '',
-              }}
-              onClick={handleSubmit}
-              onMouseDown={(e) => e.preventDefault()}
-            />
-            {(getConfig().LOGIN_ISSUE_SUPPORT_LINK) && (
-              <Hyperlink
-                id="forgot-password"
-                name="forgot-password"
-                className="ml-4 font-weight-500 text-body"
-                destination={getConfig().LOGIN_ISSUE_SUPPORT_LINK}
-                target="_blank"
-                showLaunchIcon={false}
-              >
-                {formatMessage(messages['need.help.sign.in.text'])}
-              </Hyperlink>
-            )}
-            <p className="mt-5.5 small text-gray-700">
-              {formatMessage(messages['additional.help.text'], { platformName })}
-              <span>
-                <Hyperlink isInline destination={`mailto:${getConfig().INFO_EMAIL}`}>{getConfig().INFO_EMAIL}</Hyperlink>
-              </span>
-            </p>
-          </Form>
+      <div className='tw-flex tw-justify-center tw-justify-items-center tw-mt-[40px]'>
+        <div className="tw-bg-white tw-w-full tw-px-[32px]  tw-py-[56px] tw-rounded-[16px] sm:tw-px-[56px] sm:tw-max-w-[460px] ">
+          <Tabs activeKey="" id="controlled-tab" onSelect={(key) => navigate(updatePathWithQueryParams(key))}>
+            <Tab title={tabTitle} eventKey={LOGIN_PAGE} />
+          </Tabs>
+          <div id="main-content" >
+            <Form id="forget-password-form" name="forget-password-form" className="mw-xs">
+              <ForgotPasswordAlert email={bannerEmail} emailError={formErrors} status={status} />
+              <h2 className="tw-font-fixel tw-text-[30px] tw-text-netural-1000 tw-leading-[38.4px] tw-font-semibold tw-my-[24px]">
+                {formatMessage(messages['forgot.password.page.heading'])}
+              </h2>
+              <p className="tw-font-fixel tw-text-[16px] tw-text-netural-1000 tw-leading-[22.08px] tw-font-normal tw-mb-[40px]">
+                {formatMessage(messages['forgot.password.page.instructions'])}
+              </p>
+              <FormGroup
+                floatingLabel={formatMessage(messages['forgot.password.page.email.field.label'])}
+                name="email"
+                value={email}
+                autoComplete="on"
+                errorMessage={validationError}
+                handleChange={(e) => setEmail(e.target.value)}
+                handleBlur={handleBlur}
+                handleFocus={handleFocus}
+                helpText={[formatMessage(messages['forgot.password.email.help.text'], { platformName })]}
+              />
+              <StatefulButton
+                id="submit-forget-password"
+                name="submit-forget-password"
+                type="submit"
+                variant="brand"
+                className="button-primary button-lg tw-mb-[40px]"
+                state={submitState}
+                labels={{
+                  default: formatMessage(messages['forgot.password.page.submit.button']),
+                  pending: '',
+                }}
+                onClick={handleSubmit}
+                onMouseDown={(e) => e.preventDefault()}
+              />
+              <p className="tw-font-fixel tw-text-[16px] tw-text-netural-1000 tw-leading-[22.08px] tw-font-normal tw-mp-[40px]">
+                {formatMessage(messages['additional.help.text'], { platformName })}<br />
+                <span>
+                  <a className="tw-font-fixel tw-text-[16px] tw-text-purple-600 tw-leading-[22.08px] tw-font-semibold">Центр допомоги</a>
+                </span>
+              </p>
+            </Form>
+          </div>
         </div>
       </div>
     </BaseContainer>

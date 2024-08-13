@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.borderStyles {
+    background-color: white;
+    border: 2px solid;
+    border-radius: 20px;
+    border-color: grey;
+    padding: 15px;
+
+}
+
+.border-distribution {
+    max-width: 615px;
+    background-color: white;
+    padding: 24px;
+    border: 1.5px solid;
+    border-radius: 8px;
+    border-color: #E8E8E9;
+}
+
+p {
+    margin-bottom: none !important;
+}
+
+
+.form-control {
+    background-color: white;
+    height: 47px;
+    width: 350px;
+    padding: 14px 16px 16px 16px;
+    border: 1.5px solid #BBBBBD;
+    border-radius: 8px;
+    text-align: start;
+}
+
+.form-control-error {
+    background-color: white;
+    height: 47px;
+    width: 350px;
+    padding: 14px 16px 16px 16px;
+    border: 1.5px solid #C32D3A;
+    border-radius: 8px;
+    text-align: start;
+}
+
+a:hover {
+    cursor: pointer;
+    color: #7A00AD;
+}
+
+.form-control:focus {
+    border: 1.5px solid #7A00AD;
+}
+
+.button-primary {
+    background-color: #F57A28;
+    border: 1px solid white;
+    padding: 16px 16px 16px 16px;
+    border-radius: 48px;
+    color: white;
+    font-size: 16px;
+}
+
+.button-primary:hover {
+    background-color: #F57A28;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.btn-primary.disabled {
+
+    background-color: #F57A28;
+    border: 1px solid white;
+    padding: 16px 16px 16px 16px;
+    border-radius: 48px;
+    color: white;
+    font-size: 16px;
+
+}
+
+.button-primary * {
+    color: white !important;
+}
+
+.button-purple {
+
+    background-color: #6923AA;
+    border: 1.5px solid none;
+    padding: 8px;
+    margin-right: 5px;
+    border-radius: 48px;
+    color: white !important;
+    font-size: 13px;
+}
+
+.button-purple:hover {
+    background-color: #6923AA;
+    color: white !important;
+}
+
+.button-outlined {
+    border: 1.5px solid #606164;
+    background-color: white;
+    padding: 16px 16px 16px 16px;
+    border-radius: 8px;
+    color: #110F12;
+    font-size: 16px;
+}
+
+.button-lg {
+    width: 348px;
+}
+
+.button-md {
+    width: 166px;
+}
+
+.borderSelectInput {
+    width: 110px;
+}
+
+.btn-link {
+    color: black !important;
+    text-decoration: none !important;
+}
+
+.logo_footer {
+    width: 720px;
+    align-items: start;
+}
+
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #000;
+    cursor: pointer;
+    position: relative;
+}
+
+input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: #000;
+    transform: translate(-50%, -50%);
+}
+
+.nav-link {
+    padding: 0px;
+}
+
+.nav-tabs {
+    border: none;
+}
+
+@media (max-width: 375px) {
+    .form-control {
+        width: 275px;
+    }
+
+    .button-lg {
+        width: 275px;
+    }
+}
